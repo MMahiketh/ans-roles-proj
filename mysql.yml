@@ -1,5 +1,7 @@
 - name: Configure mysql server
   hosts: database
   become: true
+  vars_files:
+  - roles/vars/main.yml
   roles:
   - mysql

@@ -2,4 +2,3 @@ COMPONENT: frontend
 DNF_PKGS:
 - nginx
 CODE_DIR: /usr/share/nginx/html
-CODE_URL: https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{COMPONENT}}-v2.zip
