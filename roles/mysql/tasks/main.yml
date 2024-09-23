@@ -6,6 +6,7 @@
   ansible.builtin.dnf:
     name: "{{DNF_PKGS}}"
     state: present
+  notify: Start and enable mysql server
 
 - name: Start and enable mysql server
   ansible.builtin.service:

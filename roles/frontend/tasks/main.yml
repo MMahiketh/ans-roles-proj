@@ -2,11 +2,7 @@
   ansible.builtin.dnf:
     name: "{{DNF_PKGS}}"
     state: present
-
-- name: Start nginx
-  ansible.builtin.service:
-    name: nginx
-    state: started
+  notify: Start nginx
 
 - name: Remove previous code files at {{CODE_DIR}}
   ansible.builtin.file:
@@ -22,8 +18,3 @@
   ansible.builtin.template:
     src: expense.conf.j2
     dest: /etc/nginx/default.d/expense.conf
-
-- name: Restart nginx
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
