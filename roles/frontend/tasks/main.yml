@@ -1,0 +1,40 @@
+- name: Install required dnf packages({{DNF_PKGS}})
+  ansible.builtin.dnf:
+    name: "{{DNF_PKGS}}"
+    state: present
+
+- name: Start nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
+
+- name: Remove previous code files at {{CODE_DIR}}
+  ansible.builtin.file:
+    path: "{{CODE_DIR}}/"
+    state: absent
+
+- name: Create directory for code files
+  ansible.builtin.file:
+    name: "{{CODE_DIR}}"
+    state: directory
+
+- name: Download code
+  ansible.builtin.get_url:
+    url: "{{CODE_URL}}"
+    dest: /tmp/frontend.zip
+
+- name: Extract code files
+  ansible.builtin.unarchive:
+    src: /tmp/frontend.zip
+    dest: "{{CODE_DIR}}"
+    remote_src: true
+
+- name: Copy config file
+  ansible.builtin.copy:
+    src: expense.conf
+    dest: /etc/nginx/default.d/expense.conf
+
+- name: Restart nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
