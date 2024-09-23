@@ -1,0 +1,57 @@
+- name: Install required pip packages({{PIP_PKGS}})
+  ansible.builtin.pip:
+    name: "{{PIP_PKGS}}"
+
+- name: Disable all nodejs modules, except nodejs:20
+  ansible.builtin.shell: "{{CMD_TO_ENABLE_NODEJS20}}"
+
+- name: Install required dnf packages({{DNF_PKGS}})
+  ansible.builtin.dnf:
+    name: "{{DNF_PKGS}}"
+    state: present
+
+- name: Create directory {{CODE_DIR}} for app
+  ansible.builtin.file:
+    path: "{{CODE_DIR}}"
+    state: directory
+
+- name: Create user:{{APP_USER}}) for running app
+  ansible.builtin.user:
+    name: "{{APP_USER}}"
+
+- name: Download app code
+  ansible.builtin.get_url:
+    url: "{{CODE_URL}}"
+    dest: /tmp/backend.zip
+
+- name: Extract backend.zip to {{CODE_DIR}}
+  ansible.builtin.unarchive:
+    src: /tmp/backend.zip
+    dest: "{{CODE_DIR}}"
+    remote_src: yes
+
+- name: Install npm dependencies
+  ansible.builtin.command: npm install
+  args:
+    chdir: "{{CODE_DIR}}"
+
+- name: Copy configuration file:backend.service
+  ansible.builtin.copy:
+    src: backend.service
+    dest: /etc/systemd/system/backend.service
+
+- name: Create database in mysql server
+  community.mysql.mysql_db:
+    login_host: "{{MYSQL_DNS}}"
+    login_user: "{{MYSQL_USER}}"
+    login_password: "{{MYSQL_PASS}}"
+    target: "{{SCHEMA_FILE}}"
+    state: import
+    name: all
+
+- name: Reload systemctl daemon
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: backend
+    state: started
+    enabled: true

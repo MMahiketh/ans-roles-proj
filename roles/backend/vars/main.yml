@@ -1,0 +1,15 @@
+COMPONENT: backend
+PIP_PKGS:
+- PyMySQL
+- cryptography
+DNF_PKGS:
+- nodejs
+- mysql
+APP_USER: expense
+CODE_DIR: /app
+SCHEMA_FILE: "{{CODE_DIR}}/schema/backend.sql"
+MYSQL_DNS: database.mahdo.site
+MYSQL_USER: root
+MYSQL_PASS: ExpenseApp@1
+CODE_URL: https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{COMPONENT}}-v2.zip
+CMD_TO_ENABLE_NODEJS20: sudo dnf module disable nodejs -y; sudo dnf module enable nodejs:20 -y
