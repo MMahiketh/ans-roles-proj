@@ -17,7 +17,7 @@
 - name: Create folder, Download and extract code files (import tasks form common role)
   ansible.builtin.import_role:
     name: common
-    tasks: download_extract.yml
+    tasks_from: download_extract.yml
 
 - name: Install npm dependencies
   ansible.builtin.command: npm install
