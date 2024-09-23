@@ -7,3 +7,4 @@
   ansible.builtin.unarchive:
     src: "{{CODE_URL}}"
     dest: "{{CODE_DIR}}"
+    remote_src: true
