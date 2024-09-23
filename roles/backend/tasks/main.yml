@@ -10,25 +10,14 @@
     name: "{{DNF_PKGS}}"
     state: present
 
-- name: Create directory {{CODE_DIR}} for app
-  ansible.builtin.file:
-    path: "{{CODE_DIR}}"
-    state: directory
-
 - name: Create user:{{APP_USER}}) for running app
   ansible.builtin.user:
     name: "{{APP_USER}}"
 
-- name: Download app code
-  ansible.builtin.get_url:
-    url: "{{CODE_URL}}"
-    dest: /tmp/backend.zip
-
-- name: Extract backend.zip to {{CODE_DIR}}
-  ansible.builtin.unarchive:
-    src: /tmp/backend.zip
-    dest: "{{CODE_DIR}}"
-    remote_src: yes
+- name: Create folder, Download and extract code files (import tasks form common role)
+  ansible.builtin.import_role:
+    name: common
+    tasks: download_extract.yml
 
 - name: Install npm dependencies
   ansible.builtin.command: npm install

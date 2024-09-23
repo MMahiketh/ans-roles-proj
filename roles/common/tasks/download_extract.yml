@@ -1,0 +1,9 @@
+- name: Create directory {{CODE_DIR}} for app
+  ansible.builtin.file:
+    path: "{{CODE_DIR}}"
+    state: directory
+
+- name: Download and Extract code files to {{CODE_DIR}}
+  ansible.builtin.unarchive:
+    src: "{{CODE_URL}}"
+    dest: "{{CODE_DIR}}"
