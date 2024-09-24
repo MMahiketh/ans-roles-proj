@@ -3,5 +3,6 @@
   become: yes
   vars_files:
   - roles/vars/main.yml
+  - /var/expense/mysql_cred.yml
   roles:
   - backend
