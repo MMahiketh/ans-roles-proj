@@ -17,16 +17,22 @@
     name: "{{APP_USER}}"
 
 - name: Create folder, Download and extract code files (import tasks form common role)
+  tags:
+  - deployment
   ansible.builtin.import_role:
     name: common
     tasks_from: download_extract.yml
 
 - name: Install npm dependencies
+  tags:
+  - deployment
   ansible.builtin.command: npm install
   args:
     chdir: "{{CODE_DIR}}"
 
 - name: Create database in mysql server
+  tags:
+  - schema
   community.mysql.mysql_db:
     login_host: "{{MYSQL_DNS}}"
     login_user: "{{MYSQL_USER}}"
@@ -36,9 +42,18 @@
     name: all
 
 - name: Copy configuration file:backend.service
+  tags:
+  - configuration
   ansible.builtin.template:
     src: backend.service.j2
     dest: /etc/systemd/system/backend.service
-  notify:
-  - Reload systemctl daemon
 
+- name: Reload systemctl daemon
+  tags:
+  - configuration
+  - deployment
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: backend
+    state: started
+    enabled: true

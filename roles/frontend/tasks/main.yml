@@ -10,11 +10,15 @@
     state: started
 
 - name: Create folder, Download and Extract code files (import tasks form common role)
+  tags:
+  - deployment
   ansible.builtin.import_role:
     name: common
     tasks_from: download_extract.yml
 
 - name: Copy config file
+  tags:
+  - configuration
   ansible.builtin.template:
     src: expense.conf.j2
     dest: /etc/nginx/default.d/expense.conf
