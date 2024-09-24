@@ -4,12 +4,7 @@
     state: present
   notify: Start nginx
 
-- name: Remove previous code files at {{CODE_DIR}}
-  ansible.builtin.file:
-    path: "{{CODE_DIR}}/"
-    state: absent
-
-- name: Create folder, Download and extract code files (import tasks form common role)
+- name: Create folder, Download and Extract code files (import tasks form common role)
   ansible.builtin.import_role:
     name: common
     tasks_from: download_extract.yml
@@ -18,3 +13,5 @@
   ansible.builtin.template:
     src: expense.conf.j2
     dest: /etc/nginx/default.d/expense.conf
+  notify:
+  - Restart nginx

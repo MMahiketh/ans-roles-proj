@@ -6,13 +6,8 @@
   ansible.builtin.dnf:
     name: "{{DNF_PKGS}}"
     state: present
-  notify: Start and enable mysql server
-
-- name: Start and enable mysql server
-  ansible.builtin.service:
-    name: mysqld
-    state: started
-    enabled: true
+  notify:
+  - Start and enable mysql server
 
 - name: Check if root password of mysql is set
   community.mysql.mysql_info:
@@ -22,9 +17,9 @@
   register: mysql_info
   ignore_errors: true
 
-- name: print mysql_info var output
-  ansible.builtin.debug:
-    msg: "{{mysql_info}}"
+    #- name: print mysql_info var output
+    #ansible.builtin.debug:
+    #msg: "{{mysql_info}}"
 
 - name: If root password not set, then set it
   ansible.builtin.command: "{{CMD_MYSQL_SET_PASS}}"

@@ -1,3 +1,9 @@
+- name: Delete old code
+  ansible.builtin.file:
+    path: "{{CODE_DIR}}"
+    state: absent
+  ignore_errors: true
+
 - name: Create directory {{CODE_DIR}} for app
   ansible.builtin.file:
     path: "{{CODE_DIR}}"
