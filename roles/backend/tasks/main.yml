@@ -1,14 +1,16 @@
 - name: Install required pip packages({{PIP_PKGS}})
   ansible.builtin.pip:
-    name: "{{PIP_PKGS}}"
+    name: "{{item}}"
+  loop: "{{PIP_PKGS}}"
 
 - name: Disable all nodejs modules, except nodejs:20
   ansible.builtin.shell: "{{CMD_TO_ENABLE_NODEJS20}}"
 
 - name: Install required dnf packages({{DNF_PKGS}})
   ansible.builtin.dnf:
-    name: "{{DNF_PKGS}}"
+    name: "{{item}}"
     state: present
+  loop: "{{DNF_PKGS}}"
 
 - name: Create user:{{APP_USER}}) for running app
   ansible.builtin.user:

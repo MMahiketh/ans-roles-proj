@@ -1,11 +1,13 @@
 - name: Install required pip packages({{PIP_PKGS}})
   ansible.builtin.pip:
-    name: "{{PIP_PKGS}}"
+    name: "{{item}}"
+  loop: "{{PIP_PKGS}}"
 
 - name: Installing required dnf packages({{DNF_PKGS}})
   ansible.builtin.dnf:
-    name: "{{DNF_PKGS}}"
+    name: "{{item}}"
     state: present
+  loop: "{{DNF_PKGS}}"
 
 - name: Start and enable mysql server
   ansible.builtin.service:

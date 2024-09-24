@@ -1,7 +1,8 @@
 - name: Install required dnf packages({{DNF_PKGS}})
   ansible.builtin.dnf:
-    name: "{{DNF_PKGS}}"
+    name: "{{item}}"
     state: present
+  loop: "{{DNF_PKGS}}"
 
 - name: Start nginx
   ansible.builtin.service:
