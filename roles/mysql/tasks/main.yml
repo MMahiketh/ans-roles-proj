@@ -6,8 +6,12 @@
   ansible.builtin.dnf:
     name: "{{DNF_PKGS}}"
     state: present
-  notify:
-  - Start and enable mysql server
+
+- name: Start and enable mysql server
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: true
 
 - name: Check if root password of mysql is set
   community.mysql.mysql_info:

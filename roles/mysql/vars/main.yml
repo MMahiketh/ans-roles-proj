@@ -1,5 +1,6 @@
 PIP_PKGS:
 - PyMySQL
+- cryptography
 DNF_PKGS:
 - mysql-server
 CMD_MYSQL_SET_PASS: "mysql_secure_installation --set-root-pass {{MYSQL_PASS}}"
