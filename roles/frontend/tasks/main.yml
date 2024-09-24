@@ -2,7 +2,11 @@
   ansible.builtin.dnf:
     name: "{{DNF_PKGS}}"
     state: present
-  notify: Start nginx
+
+- name: Start nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
 
 - name: Create folder, Download and Extract code files (import tasks form common role)
   ansible.builtin.import_role:
