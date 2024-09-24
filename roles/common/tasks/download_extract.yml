@@ -4,7 +4,7 @@
     state: absent
   ignore_errors: true
 
-- name: Create directory {{CODE_DIR}} for app
+- name: Create directory {{CODE_DIR}} for new code files
   ansible.builtin.file:
     path: "{{CODE_DIR}}"
     state: directory
