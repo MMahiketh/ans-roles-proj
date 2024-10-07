@@ -1,4 +1,4 @@
-MYSQL_DNS: database.mahdo.site
+MYSQL_DNS: mysql.mahdo.site
 BKEND_DNS: backend.mahdo.site
 MYSQL_USER: root
 CODE_URL: https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{COMPONENT}}-v2.zip
