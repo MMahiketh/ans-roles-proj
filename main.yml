@@ -1,0 +1,8 @@
+- name: Configure {{ instance }} server
+  hosts: local
+  connection: local
+  become: yes
+  vars_files:
+  - roles/vars/main.yml
+  roles:
+  - {{ instance }}
