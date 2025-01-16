@@ -1,4 +1,4 @@
-COMPONENT: frontend
+#COMPONENT: frontend  -> changed to instance
 DNF_PKGS:
 - nginx
 CODE_DIR: /usr/share/nginx/html

@@ -1,4 +1,4 @@
-COMPONENT: backend
+#COMPONENT: backend  -> changed to instance
 PIP_PKGS:
 - PyMySQL
 - cryptography
